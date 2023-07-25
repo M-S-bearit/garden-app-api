@@ -1,0 +1,422 @@
+openapi: 3.0.3
+info:
+  title: Garden-App  APIs Definition
+  description: |
+      # About Garden-App
+      **Garden-App** is a gardening application that allows users to manage their garden and keep track of their plants. Users can add plants to their garden, view the quantity of plants they have, and reset the garden if needed. The app utilizes Redux and React Redux to manage the state of the garden.
+      
+      # The app's main features include:
+      - Retrieve all users data or single user data
+      - Retrieve all plants data or single plant data
+      - Filter plants by categories
+      - Search for specific plant
+      - AI support
+      - and `much more`
+      
+      # Categories suported
+        - herbs
+        - vegetables
+        - flowers
+  termsOfService: https://garden-app-vercel.vercel.app/terms/
+  contact:
+    name: Garden App Team
+    url: https://garden-app-vercel.vercel.app/support
+    email: support@gardenapp.fi
+  license:
+    name: Garden-App License
+    url: https://garden-app-vercel.vercel.app/LICENSE-1.0.html
+  version: 0.0.1
+servers:
+  - url: http://localhost:3000/
+    description: Development server
+  - url: https://garden-app-vercel.vercel.app/
+    description: Live server
+tags:
+  - name: Users
+    description: all-users-related operations
+  - name: User
+    description: single-user-related operations
+  - name: Plants
+    description: plants-related operations
+  - name: Plant
+    description: single-plant-related operations
+paths:
+  /Users:
+    get:
+      tags:
+        - Users
+      summary: List all Users
+      description: Returns the list of all registered Users 
+      
+      responses:
+        '200':
+          description: Return A list of All Users
+          
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    userId:
+                      type: string
+                    name:
+                      type: string
+                    email:
+                      type: string
+                
+              examples:
+                all-Users-data:
+                  summary: All users example data
+                  
+                  value:
+                    - userId: 54dsf454421swdfdsf
+                      name: Mohamed Sallam
+                      email: mohamed.sallam@learnit.fi
+                    - userId: 54dsf45fdsfdsdfdsf
+                      name: User 001
+                      email: user.001@learnit.fi
+
+        '500':
+          $ref: "#/components/responses/InternalServerError"
+        '400':
+          $ref: "#/components/responses/BadRequestError"
+  /Users/{userId}:
+    get:
+      tags:
+        - User
+      summary: Return single user details based on ID 
+      description: |
+        Return single user details based on ID. You can provide the id as a segment in the URL as the following example:   
+        ### http://localhost:3000/api/users`?id=64a95a8d5efe31c392445f33`
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            minimum: 100
+            maximum: 1000
+          example: 64a95a8d5efe31c392445f33
+      responses:
+        '200':
+          description: Return single user details based on ID 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userId:
+                    type: string
+                  name:
+                    type: string
+                  email:
+                    type: string
+              examples:
+                single-user-data:
+                  summary: Single user details
+                  value:
+                    userId: 54dsf454421swdfdsf
+                    name: Mohamed Sallam
+                    email: mohamed.sallam@learnit.fi
+
+        '500':
+          $ref: "#/components/responses/InternalServerError"
+        '400':
+          $ref: "#/components/responses/BadRequestError"
+
+  
+  /loggedinUser:
+    get:
+      tags:
+        - User
+      summary: Return the current logged in User for testing purposes (name & email)
+      description: Return single logged in user using session provider
+      responses:
+        '200':
+          description: Return logged in User details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userId:
+                    type: string
+                  name:
+                    type: string
+                  email:
+                    type: string
+              examples:
+                single-user-data:
+                  summary: Logged in user details
+                  value:
+                    userId: 54dsf454421swdfdsf
+                    name: Mohamed Sallam
+                    email: mohamed.sallam@learnit.fi
+
+        '500':
+          $ref: "#/components/responses/InternalServerError"
+          
+          
+  
+  /plants:
+    get:
+      tags:
+        - Plants
+      summary: List all plants available in database
+      description: |
+        Returns the List of all plants available in database
+      
+      responses:
+        '200':
+          description: A list all plants available in database
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    trefle_id:
+                      type: string
+                    common_name:
+                      type: string
+                    scientific_name:
+                      type: string 
+                    image_url: 
+                      type: string 
+                    watering:
+                      type: string 
+                    lighting:
+                      type: string 
+                    diseases:
+                      type: array 
+                      items:
+                        type: string
+                    type:
+                      type: array 
+                      items:
+                        type: string
+                    categories:
+                      type: string 
+                    extendedPlantsData:
+                      type: object 
+                      properties:
+                        extendedData_001:
+                          type: object
+                        extendedData_002:
+                          type: object
+                        extendedData_003:
+                          type: object
+                    blooming_period:
+                      type: array 
+                      items:
+                        type: string
+                    dimensions:
+                      type: string 
+                    hardiness:
+                      type: string 
+                    soil_ph_min:
+                      type: integer 
+                    soil_ph_max:
+                      type: integer 
+                    life_cycle:  
+                      type: string 
+              examples:
+                plants-data:
+                  summary: Plants example data
+                  value:
+                    - trefle_id: 111
+                      common_name: plant common name
+                      scientific_name: plant scientific name
+                      image_url: https://example.com/carrot.jpg
+                      watering: Twice a day
+                      lighting: Full sun
+                      diseases: ["disease_001", "disease_002"]
+                      type: ["disease_001", "disease_002"]
+                      categories: herbs
+                        
+                      extendedPlantsData: { "plantObj_01": {
+                            "anyKey_01": "value_01",
+                            "anyKey_02": "value_02"
+                          },
+                          "plantObj_02": {
+                            "anyKey_01": "value_01",
+                            "anyKey_02": "value_02"
+                          }
+                        }
+                      blooming_period: ["B-001", "B-002"]
+                      dimensions: max 30cm
+                      hardiness: hardiness data
+                      soil_ph_min: 7
+                      soil_ph_max: 77
+                      life_cycle: evergreen
+                    - trefle_id: 222
+                      common_name: plant common name
+                      scientific_name: plant scientific name
+                      image_url: https://example.com/carrot.jpg
+                      watering: Twice a day
+                      lighting: Full sun
+                      diseases: ["disease_001", "disease_002"]
+                      type: ["disease_001", "disease_002"]
+                      categories: herbs
+                        
+                      extendedPlantsData: { "plantObj_01": {
+                            "anyKey_01": "value_01",
+                            "anyKey_02": "value_02"
+                          },
+                          "plantObj_02": {
+                            "anyKey_01": "value_01",
+                            "anyKey_02": "value_02"
+                          }
+                        }
+                      blooming_period: ["B-001", "B-002"]
+                      dimensions: max 30cm
+                      hardiness: hardiness data
+                      soil_ph_min: 7
+                      soil_ph_max: 77
+                      life_cycle: evergreen  
+                    
+
+
+        '500':
+          $ref: "#/components/responses/InternalServerError"
+          
+          
+  /plants/{plantId}:
+    get:
+      tags:
+        - Plant
+      summary: Return single plant details
+      description: |
+        Return single plant details based on ID. You can provide the id as a segment in the URL as the following example:   
+        ### http://localhost:3000/api/plants`?id=64ad39f138db1dd55edcbf1c`
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: integer
+            minimum: 100
+            maximum: 1000
+            
+          example: 102
+      responses:
+        '200':
+          description: A list all plants available in database
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  trefle_id:
+                    type: string
+                  common_name:
+                    type: string
+                  scientific_name:
+                    type: string 
+                  image_url: 
+                    type: string 
+                  watering:
+                    type: string 
+                  lighting:
+                    type: string 
+                  diseases:
+                    type: array 
+                    items:
+                      type: string
+                  type:
+                    type: array 
+                    items:
+                      type: string
+                  categories:
+                    type: string 
+                  extendedPlantsData:
+                    type: object 
+                    properties:
+                      extendedData_001:
+                        type: object
+                      extendedData_002:
+                        type: object
+                      extendedData_003:
+                        type: object
+                  blooming_period:
+                    type: array 
+                    items:
+                      type: string
+                  dimensions:
+                    type: string 
+                  hardiness:
+                    type: string 
+                  soil_ph_min:
+                    type: integer 
+                  soil_ph_max:
+                    type: integer 
+                  life_cycle:  
+                    type: string 
+              examples:
+                plants-data:
+                  summary: Single plant example data
+                  value:
+                    trefle_id: 111
+                    common_name: plant common name
+                    scientific_name: plant scientific name
+                    image_url: https://example.com/carrot.jpg
+                    watering: Twice a day
+                    lighting: Full sun
+                    diseases: ["disease_001", "disease_002"]
+                    type: ["disease_001", "disease_002"]
+                    categories: herbs
+                      
+                    extendedPlantsData: { "plantObj_01": {
+                          "anyKey_01": "value_01",
+                          "anyKey_02": "value_02"
+                        },
+                        "plantObj_02": {
+                          "anyKey_01": "value_01",
+                          "anyKey_02": "value_02"
+                        }
+                      }
+                    blooming_period: ["B-001", "B-002"]
+                    dimensions: max 30cm
+                    hardiness: hardiness data
+                    soil_ph_min: 7
+                    soil_ph_max: 77
+                    life_cycle: evergreen
+
+        '500':
+          $ref: "#/components/responses/InternalServerError"        
+
+
+        
+components:
+  parameters:
+    orderIdQueryParam:
+      name: orderId
+      in: query
+      required: true
+      schema:
+        type: integer
+  schemas:
+
+
+
+
+    Category:
+      type: object
+      properties:
+        categoryId:
+          type: integer
+        name:
+          type: string
+    
+
+  responses:
+    InternalServerError:
+      description: |
+        An error occured while processing the request.
+        Please contact support@gardenapp.com
+    BadRequestError:
+      description: |
+        the server was unable to process the request due to invalid information sent by the client.
