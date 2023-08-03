@@ -82,6 +82,7 @@ paths:
           $ref: "#/components/responses/InternalServerError"
         '400':
           $ref: "#/components/responses/BadRequestError"
+  
   /Users/{userId}:
     get:
       tags:
@@ -125,7 +126,6 @@ paths:
           $ref: "#/components/responses/InternalServerError"
         '400':
           $ref: "#/components/responses/BadRequestError"
-
   
   /loggedinUser:
     get:
@@ -158,71 +158,23 @@ paths:
         '500':
           $ref: "#/components/responses/InternalServerError"
           
-          
-  
   /plants:
     get:
       tags:
         - Plants
-      summary: List all plants available in database
+      summary: List all plants available in the database
       description: |
-        Returns the List of all plants available in database
+        Returns the List of all plants available in the database
       
       responses:
         '200':
-          description: A list all plants available in database
+          description: A list all plants available in the database
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    trefle_id:
-                      type: string
-                    common_name:
-                      type: string
-                    scientific_name:
-                      type: string 
-                    image_url: 
-                      type: string 
-                    watering:
-                      type: string 
-                    lighting:
-                      type: string 
-                    diseases:
-                      type: array 
-                      items:
-                        type: string
-                    type:
-                      type: array 
-                      items:
-                        type: string
-                    categories:
-                      type: string 
-                    extendedPlantsData:
-                      type: object 
-                      properties:
-                        extendedData_001:
-                          type: object
-                        extendedData_002:
-                          type: object
-                        extendedData_003:
-                          type: object
-                    blooming_period:
-                      type: array 
-                      items:
-                        type: string
-                    dimensions:
-                      type: string 
-                    hardiness:
-                      type: string 
-                    soil_ph_min:
-                      type: integer 
-                    soil_ph_max:
-                      type: integer 
-                    life_cycle:  
-                      type: string 
+                  $ref: '#/components/schemas/PlantData'
               examples:
                 plants-data:
                   summary: Plants example data
@@ -231,22 +183,19 @@ paths:
                       common_name: plant common name
                       scientific_name: plant scientific name
                       image_url: https://example.com/carrot.jpg
-                      watering: Twice a day
+                      description: Some description
                       lighting: Full sun
                       diseases: ["disease_001", "disease_002"]
                       type: ["disease_001", "disease_002"]
                       categories: herbs
-                        
-                      extendedPlantsData: { "plantObj_01": {
-                            "anyKey_01": "value_01",
-                            "anyKey_02": "value_02"
-                          },
-                          "plantObj_02": {
-                            "anyKey_01": "value_01",
-                            "anyKey_02": "value_02"
-                          }
-                        }
-                      blooming_period: ["B-001", "B-002"]
+                      blooming_period:
+                        plantObj_01:
+                          anyKey_01: value_01
+                          anyKey_02: value_02
+                        plantObj_02:
+                          anyKey_01: value_01
+                          anyKey_02: value_02
+                      
                       dimensions: max 30cm
                       hardiness: hardiness data
                       soil_ph_min: 7
@@ -256,35 +205,28 @@ paths:
                       common_name: plant common name
                       scientific_name: plant scientific name
                       image_url: https://example.com/carrot.jpg
-                      watering: Twice a day
+                      description: Some description
                       lighting: Full sun
                       diseases: ["disease_001", "disease_002"]
                       type: ["disease_001", "disease_002"]
                       categories: herbs
-                        
-                      extendedPlantsData: { "plantObj_01": {
-                            "anyKey_01": "value_01",
-                            "anyKey_02": "value_02"
-                          },
-                          "plantObj_02": {
-                            "anyKey_01": "value_01",
-                            "anyKey_02": "value_02"
-                          }
-                        }
-                      blooming_period: ["B-001", "B-002"]
+                      blooming_period:
+                        plantObj_01:
+                          anyKey_01: value_01
+                          anyKey_02: value_02
+                        plantObj_02:
+                          anyKey_01: value_01
+                          anyKey_02: value_02
+                      
                       dimensions: max 30cm
                       hardiness: hardiness data
                       soil_ph_min: 7
                       soil_ph_max: 77
-                      life_cycle: evergreen  
-                    
-
-
+                      life_cycle: evergreen
         '500':
           $ref: "#/components/responses/InternalServerError"
-          
-          
-  /plants/{plantId}:
+        
+  /api/plants/{plantId}:
     get:
       tags:
         - Plant
@@ -300,61 +242,14 @@ paths:
             type: integer
             minimum: 100
             maximum: 1000
-            
           example: 102
       responses:
         '200':
-          description: A list all plants available in database
+          description: A list all plants available in the database
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  trefle_id:
-                    type: string
-                  common_name:
-                    type: string
-                  scientific_name:
-                    type: string 
-                  image_url: 
-                    type: string 
-                  watering:
-                    type: string 
-                  lighting:
-                    type: string 
-                  diseases:
-                    type: array 
-                    items:
-                      type: string
-                  type:
-                    type: array 
-                    items:
-                      type: string
-                  categories:
-                    type: string 
-                  extendedPlantsData:
-                    type: object 
-                    properties:
-                      extendedData_001:
-                        type: object
-                      extendedData_002:
-                        type: object
-                      extendedData_003:
-                        type: object
-                  blooming_period:
-                    type: array 
-                    items:
-                      type: string
-                  dimensions:
-                    type: string 
-                  hardiness:
-                    type: string 
-                  soil_ph_min:
-                    type: integer 
-                  soil_ph_max:
-                    type: integer 
-                  life_cycle:  
-                    type: string 
+                $ref: '#/components/schemas/PlantData'
               examples:
                 plants-data:
                   summary: Single plant example data
@@ -363,33 +258,43 @@ paths:
                     common_name: plant common name
                     scientific_name: plant scientific name
                     image_url: https://example.com/carrot.jpg
-                    watering: Twice a day
+                    description: Some description
                     lighting: Full sun
                     diseases: ["disease_001", "disease_002"]
                     type: ["disease_001", "disease_002"]
                     categories: herbs
-                      
-                    extendedPlantsData: { "plantObj_01": {
-                          "anyKey_01": "value_01",
-                          "anyKey_02": "value_02"
-                        },
-                        "plantObj_02": {
-                          "anyKey_01": "value_01",
-                          "anyKey_02": "value_02"
-                        }
-                      }
-                    blooming_period: ["B-001", "B-002"]
+                    blooming_period:
+                      plantObj_01:
+                        anyKey_01: value_01
+                        anyKey_02: value_02
+                      plantObj_02:
+                        anyKey_01: value_01
+                        anyKey_02: value_02
+                    
                     dimensions: max 30cm
                     hardiness: hardiness data
                     soil_ph_min: 7
                     soil_ph_max: 77
                     life_cycle: evergreen
-
         '500':
-          $ref: "#/components/responses/InternalServerError"        
+          $ref: "#/components/responses/InternalServerError"
 
+  /api/plants:
+    post:
+      tags:
+        - Plant
+      summary: Create a new rose data entry
+      description: Create a new rose data entry in the database
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addPlant'
+      responses:
+        '200':
+          description: OK
 
-        
 components:
   parameters:
     orderIdQueryParam:
@@ -399,10 +304,6 @@ components:
       schema:
         type: integer
   schemas:
-
-
-
-
     Category:
       type: object
       properties:
@@ -410,13 +311,132 @@ components:
           type: integer
         name:
           type: string
-    
+
+    PlantData:
+      type: object
+      properties:
+        trefle_id:
+          type: integer
+        common_name:
+          type: string
+        scientific_name:
+          type: string 
+        image_url: 
+          type: string 
+        description:
+          type: string 
+        lighting:
+          type: string 
+        diseases:
+          type: array 
+          items:
+            type: string
+        type:
+          type: array 
+          items:
+            type: string
+        categories:
+          type: string 
+        blooming_period:
+          type: object 
+          properties:
+            add_information:
+            extendedData_002:
+              type: object
+            extendedData_003:
+              type: object
+        
+        dimensions:
+          type: string 
+        hardiness:
+          type: string 
+        soil_ph_min:
+          type: integer 
+        soil_ph_max:
+          type: integer 
+        life_cycle:  
+          type: string 
+
+    addPlant:
+      type: object
+      properties:
+        lighting:
+          type: array
+          items:
+            type: string
+        blooming_period:
+          type: object
+          properties:
+            randomKey1:
+              $ref: '#/components/schemas/BloomingPeriod'
+            randomKey4:
+              type: object
+              properties:
+                randomKey5:
+                  type: string
+                randomKey6:
+                  type: string
+        care_advice:
+          type: object
+          properties:
+            random_Advice:
+              $ref: '#/components/schemas/CareAdvice'
+        description:
+          type: string
+        diseases:
+          type: array
+          items:
+            type: string
+        common_name:
+          type: string
+        image_url:
+          type: string
+          format: uri
+        type:
+          type: string
+        soil_ph_min:
+          type: number
+          format: float
+        life_cycle:
+          type: string
+        trefle_id:
+          type: integer
+          format: int64
+        scientific_name:
+          type: string
+        dimensions:
+          type: string
+        hardiness:
+          type: string
+        soil_ph_max:
+          type: number
+          format: float
+
+    BloomingPeriod:
+      type: object
+      properties:
+        early:
+          type: string
+        mid-season:
+          type: string
+        late_blooming:
+          type: string
+
+    CareAdvice:
+      type: object
+      properties:
+        care_advice_01:
+          type: string
+        care_advice_02:
+          type: string
+        description_007:
+          type: string
 
   responses:
     InternalServerError:
       description: |
-        An error occured while processing the request.
+        An error occurred while processing the request.
         Please contact support@gardenapp.com
     BadRequestError:
       description: |
-        the server was unable to process the request due to invalid information sent by the client.
+        The server was unable to process the request due to invalid information sent by the client.
