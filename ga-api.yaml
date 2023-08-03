@@ -77,22 +77,52 @@ paths:
                       image: "https://lh3.googleusercontent.com/a/AAcHTtfCw1CQHEbIB6rZ0clQ9GRjAy7QS3PZl7OCNEshx7zD=s96-c"
                       createdAt: "2023-07-04T06:48:53.424Z"
                       updatedAt: "2023-07-04T06:48:53.424Z" 
-                    - id: 64a3c0d50d0f50248c8a4242
-                      name: User Name
+                      
+        '500':
+          $ref: "#/components/responses/InternalServerError"
+        '400':
+          $ref: "#/components/responses/BadRequestError"
+                    
+    post:
+      tags:
+        - Users
+      summary: List all Users
+      description: Returns the list of all registered Users 
+      
+      responses:
+        '200':
+          description: Return A list of All Users
+          
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    userId:
+                      type: string
+                    name:
+                      type: string
+                    email:
+                      type: string
+                
+              examples:
+                all-Users-data:
+                  summary: All users example data
+                  
+                  value:
+                    - name: User Name
                       email: user.email@email.com
                       image: "https://lh3.googleusercontent.com/a/AAcHTtfCw1CQHEbIB6rZ0clQ9GRjAy7QS3PZl7OCNEshx7zD=s96-c"
-                      createdAt: "2023-07-04T06:48:53.424Z"
-                      updatedAt: "2023-07-04T06:48:53.424Z"   
                       
-                    
-
 
 
 
         '500':
           $ref: "#/components/responses/InternalServerError"
         '400':
-          $ref: "#/components/responses/BadRequestError"
+          $ref: "#/components/responses/BadRequestErrorUserPost"
   
   /Users/{userId}:
     get:
@@ -456,3 +486,6 @@ components:
     BadRequestError:
       description: |
         The server was unable to process the request due to invalid information sent by the client.
+    BadRequestErrorUserPost:
+      description: |
+        The server was unable to create new user.
