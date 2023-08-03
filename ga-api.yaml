@@ -211,12 +211,14 @@ paths:
                       type: ["disease_001", "disease_002"]
                       categories: herbs
                       blooming_period:
-                        plantObj_01:
-                          anyKey_01: value_01
-                          anyKey_02: value_02
-                        plantObj_02:
-                          anyKey_01: value_01
-                          anyKey_02: value_02
+                        type: object 
+                        properties:
+                          add_information:
+                            type: string
+                          extendedData_002:
+                            type: Date
+                          extendedData_003:
+                            type: Date
                       
                       dimensions: max 30cm
                       hardiness: hardiness data
@@ -264,12 +266,14 @@ paths:
                     type: ["disease_001", "disease_002"]
                     categories: herbs
                     blooming_period:
-                      plantObj_01:
-                        anyKey_01: value_01
-                        anyKey_02: value_02
-                      plantObj_02:
-                        anyKey_01: value_01
-                        anyKey_02: value_02
+                      type: object 
+                      properties:
+                        add_information:
+                          type: string
+                        extendedData_002:
+                          type: Date
+                        extendedData_003:
+                          type: Date
                     
                     dimensions: max 30cm
                     hardiness: hardiness data
@@ -341,10 +345,11 @@ components:
           type: object 
           properties:
             add_information:
+              type: string
             extendedData_002:
-              type: object
+              type: string
             extendedData_003:
-              type: object
+              type: string
         
         dimensions:
           type: string 
@@ -368,7 +373,7 @@ components:
           type: object
           properties:
             randomKey1:
-              $ref: '#/components/schemas/BloomingPeriod'
+              $ref: '#/components/schemas/blooming_period'
             randomKey4:
               type: object
               properties:
@@ -412,14 +417,14 @@ components:
           type: number
           format: float
 
-    BloomingPeriod:
-      type: object
+    blooming_period:
+      type: object 
       properties:
-        early:
+        add_information:
           type: string
-        mid-season:
+        extendedData_002:
           type: string
-        late_blooming:
+        extendedData_003:
           type: string
 
     CareAdvice:
