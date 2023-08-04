@@ -228,7 +228,7 @@ paths:
                       lighting: Full sun
                       diseases: ["disease_001", "disease_002"]
                       type: ["disease_001", "disease_002"]
-                      categories: herbs
+
                       blooming_period:
                         plantObj_01:
                           anyKey_01: value_01
@@ -242,30 +242,13 @@ paths:
                       soil_ph_min: 7
                       soil_ph_max: 77
                       life_cycle: evergreen
-                    - trefle_id: 222
-                      common_name: plant common name
-                      scientific_name: plant scientific name
-                      image_url: https://example.com/carrot.jpg
-                      description: Some description
-                      lighting: Full sun
-                      diseases: ["disease_001", "disease_002"]
-                      type: ["disease_001", "disease_002"]
-                      categories: herbs
-                      blooming_period:
-                        type: object 
-                        properties:
-                          add_information:
-                            type: string
-                          extendedData_002:
-                            type: Date
-                          extendedData_003:
-                            type: Date
+                      CareAdvice:
+                          watering: "deeply 2-3 times per week when top of soil becomes dry"
+                          fertilizing: "fertilizing"
+                          planting: "planting"
+                          seasonal_care: "seasonal_care"
+
                       
-                      dimensions: max 30cm
-                      hardiness: hardiness data
-                      soil_ph_min: 7
-                      soil_ph_max: 77
-                      life_cycle: evergreen
         '500':
           $ref: "#/components/responses/InternalServerError"
         
@@ -305,7 +288,7 @@ paths:
                     lighting: Full sun
                     diseases: ["disease_001", "disease_002"]
                     type: ["disease_001", "disease_002"]
-                    categories: herbs
+
                     blooming_period:
                       type: object 
                       properties:
@@ -349,17 +332,12 @@ components:
       schema:
         type: integer
   schemas:
-    Category:
-      type: object
-      properties:
-        categoryId:
-          type: integer
-        name:
-          type: string
 
     PlantData:
       type: object
       properties:
+        id:
+          type: string
         trefle_id:
           type: integer
         common_name:
@@ -380,8 +358,7 @@ components:
           type: array 
           items:
             type: string
-        categories:
-          type: string 
+
         blooming_period:
           type: object 
           properties:
@@ -402,6 +379,8 @@ components:
           type: integer 
         life_cycle:  
           type: string 
+        care_advice:
+              $ref: '#/components/schemas/CareAdvice'  
 
     addPlant:
       type: object
@@ -423,9 +402,6 @@ components:
                 randomKey6:
                   type: string
         care_advice:
-          type: object
-          properties:
-            random_Advice:
               $ref: '#/components/schemas/CareAdvice'
         description:
           type: string
@@ -471,11 +447,13 @@ components:
     CareAdvice:
       type: object
       properties:
-        care_advice_01:
+        watering: 
           type: string
-        care_advice_02:
+        fertilizing: 
           type: string
-        description_007:
+        planting: 
+          type: string
+        seasonal_care: 
           type: string
 
   responses:
