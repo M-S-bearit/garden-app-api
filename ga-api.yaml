@@ -3,6 +3,8 @@ info:
   title: Garden-App  APIs Definition
   description: |
       # About Garden-App
+      ![Garden-App Logo](https://main.dps6886imp1cr.amplifyapp.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo-box.5c48920a.png&w=384&q=75)
+      
       **Garden-App** is a gardening application that allows users to manage their garden and keep track of their plants. Users can add plants to their garden, view the quantity of plants they have, and reset the garden if needed. The app utilizes Redux and React Redux to manage the state of the garden.
       
       # The app's main features include:
