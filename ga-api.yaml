@@ -225,18 +225,16 @@ paths:
                       scientific_name: plant scientific name
                       image_url: https://example.com/carrot.jpg
                       description: Some description
-                      lighting: Full sun
+                      lighting: ["full sun", "partial shade"]
                       diseases: ["disease_001", "disease_002"]
-                      type: ["disease_001", "disease_002"]
-
-                      blooming_period:
-                        plantObj_01:
-                          anyKey_01: value_01
-                          anyKey_02: value_02
-                        plantObj_02:
-                          anyKey_01: value_01
-                          anyKey_02: value_02
+                      type: "herb"
                       
+
+                      blooming_period: {
+                        add_information: "between late spring and early fall",
+                        start: "2023-07-01",
+                        end: "2023-09-30"
+                      }
                       dimensions: max 30cm
                       hardiness: hardiness data
                       soil_ph_min: 7
@@ -285,19 +283,15 @@ paths:
                     scientific_name: plant scientific name
                     image_url: https://example.com/carrot.jpg
                     description: Some description
-                    lighting: Full sun
+                    lighting: ["full sun", "partial shade"]
                     diseases: ["disease_001", "disease_002"]
-                    type: ["disease_001", "disease_002"]
+                    type: "flower"
 
-                    blooming_period:
-                      type: object 
-                      properties:
-                        add_information:
-                          type: string
-                        extendedData_002:
-                          type: Date
-                        extendedData_003:
-                          type: Date
+                    blooming_period: {
+                        add_information: "between late spring and early fall",
+                        start: "2023-07-01",
+                        end: "2023-09-30"
+                      }
                     
                     dimensions: max 30cm
                     hardiness: hardiness data
@@ -349,7 +343,9 @@ components:
         description:
           type: string 
         lighting:
-          type: string 
+          type: array 
+          items:
+            type: string
         diseases:
           type: array 
           items:
@@ -390,17 +386,14 @@ components:
           items:
             type: string
         blooming_period:
-          type: object
+          type: object 
           properties:
-            randomKey1:
-              $ref: '#/components/schemas/blooming_period'
-            randomKey4:
-              type: object
-              properties:
-                randomKey5:
-                  type: string
-                randomKey6:
-                  type: string
+            add_information:
+              type: string
+            extendedData_002:
+              type: string
+            extendedData_003:
+              type: string
         care_advice:
               $ref: '#/components/schemas/CareAdvice'
         description:
