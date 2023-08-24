@@ -21,17 +21,17 @@ info:
       - flowers
   termsOfService: https://garden-app-vercel.vercel.app/terms/
   contact:
-    name: Garden App Team
+    name: Easy Garden App Team
     url: https://garden-app-vercel.vercel.app/support
     email: support@gardenapp.fi
   license:
-    name: Garden-App License
+    name: Easy Garden App License
     url: https://garden-app-vercel.vercel.app/LICENSE-1.0.html
   version: 0.0.1
 servers:
   - url: http://localhost:3000/
     description: Development server
-  - url: https://garden-app-vercel.vercel.app/
+  - url: https://main.dps6886imp1cr.amplifyapp.com/
     description: Live server
 tags:
   - name: Users
